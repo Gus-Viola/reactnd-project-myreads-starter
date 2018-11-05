@@ -6,14 +6,13 @@ import BookShelf from './BookShelf.js'
 export default class ListBooks extends Component {
   render() {
 
-    const { books } = this.props;
+    const { books, updateState } = this.props;
 
     const shelves = [
       { type: 'currentlyReading', title: 'Currently Reading' },
       { type: 'wantToRead', title: 'Want to Read' },
       { type: 'read', title: 'Read' }
-    ];
-
+                    ];
 
     return (
       <div className="list-books">
@@ -28,7 +27,7 @@ export default class ListBooks extends Component {
                 <div className = "bookshelf" key={key}>
                   <h2 className = "bookshelf-title"> {shelf.title}</h2>
                   <div className = "bookshelf-books">
-                    <BookShelf books={booksOnShelf} />
+                    <BookShelf books={booksOnShelf} updateState={updateState} />
                   </div>
                 </div>
               )

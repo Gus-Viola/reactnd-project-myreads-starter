@@ -16,6 +16,20 @@ class BooksApp extends React.Component {
     books: []
   }
 
+  updateState(){
+    //this is a callback function that triggers the componentDidUpdate below
+    //I sent this function as a prop all the way down, then called it to trigger the component update
+    //this is coding Horror, but I don't know how to get out of it. Do you suggest anything?
+  }
+
+  componentDidUpdate() {
+    BooksAPI.getAll().then(array => {
+      this.setState({
+        books: array
+      });
+    });
+  }
+
   componentDidMount() {
   BooksAPI.getAll().then(array => {
     this.setState({
@@ -27,7 +41,7 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (<SearchBooks /> ) : ( <ListBooks books={this.state.books} />)}
+        {this.state.showSearchPage ? (<SearchBooks /> ) : ( <ListBooks books={this.state.books} updateState={this.updateState} />)}
       </div>
     )
   }
