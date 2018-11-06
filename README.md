@@ -1,98 +1,47 @@
-# MyReads Project
+## Udacity's MyReads Project, for the Advanced Web Dev NanoDegree, by [Gus Viola](https://linkedin.com/in/gusviola/)
+=============================================
 
-This is the starter template for the final assessment project for Udacity's React Fundamentals course. The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
+## Table of Contents
 
-Of course, you are free to start this project from scratch if you wish! Just be sure to use [Create React App](https://github.com/facebookincubator/create-react-app) to bootstrap the project.
+* [Introduction](#introduction)
+* [Installation](#Installation)
+* [Instructions](#instructions)
+* [Dependencies](#dependencies)
+* [License](#License)
 
-## TL;DR
+## Introduction
 
-To get started developing right away:
+This is a single-page React app which allows you to search books from a Udacity database. The books can be stored
+in three different shelves, and moved around. It is a showcase for my skills using the React DOM.
 
-* install all project dependencies with `npm install`
-* start the development server with `npm start`
+It was built upon the starter template for the final assessment project for Udacity's React Fundamentals course, which can be found [here](https://github.com/udacity/reactnd-project-myreads-starter). I added interactivity to the app by refactoring the static code
+from the template.
 
-dependencies:
-npm install --save escape-string-regexp sort-by
-npm install --save react-router-dom
-import React from 'react'
-import ReactDOM from 'react-dom'
+## Installation
 
-## What You're Getting
-```bash
-├── CONTRIBUTING.md
-├── README.md - This file.
-├── SEARCH_TERMS.md # The whitelisted short collection of available search terms for you to use with your app.
-├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
-├── public
-│   ├── favicon.ico # React Icon, You may change if you wish.
-│   └── index.html # DO NOT MODIFY
-└── src
-    ├── App.css # Styles for your app. Feel free to customize this as you desire.
-    ├── App.js # This is the root of your app. Contains static HTML right now.
-    ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
-    ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
-    ├── icons # Helpful images for your app. Use at your discretion.
-    │   ├── add.svg
-    │   ├── arrow-back.svg
-    │   └── arrow-drop-down.svg
-    ├── index.css # Global styles. You probably won't need to change anything here.
-    └── index.js # You should not need to modify this file. It is used for DOM rendering only.
-```
+If you have [node.js](https://nodejs.org/) installed in your machine:
 
-Remember that good React design practice is to create new JS files for each component and use import/require statements to include them where they are needed.
+* Click on the <span style="color:green">green "Clone or download" button</span> above to the right, get all files and folders in your drive.
+* Install all project dependencies with `npm install`
+* Start the development server with `npm start`
 
-## Backend Server
+If you are interested in programming, feel free to [clone](https://help.github.com/articles/cloning-a-repository/) and use the code! It is distributed under the [MIT License](https://choosealicense.com/licenses/mit/).
 
-To simplify your development process, we've provided a backend server for you to develop against. The provided file [`BooksAPI.js`](src/BooksAPI.js) contains the methods you will need to perform necessary operations on the backend:
+## Instructions
 
-* [`getAll`](#getall)
-* [`update`](#update)
-* [`search`](#search)
+* Click on the <span style="color:green">+ button</span> to search new books.
+* Use the "shelf changer" to save your favorite books to one of the three shelves
+* The shelves are "Currently Reading, Want to Read, Read"
 
-### `getAll`
+## Dependencies
 
-Method Signature:
+This app uses the [React](https://reactjs.org/) library. Dependencies:
+* [React DOM](https://www.npmjs.com/package/react-dom)
+* [React Router](https://www.npmjs.com/package/react-router)
+* BooksAPI.js, a JavaScript API for the provided Udacity [Udacity](https://www.udacity.com/) backend
 
-```js
-getAll()
-```
+## License
 
-* Returns a Promise which resolves to a JSON object containing a collection of book objects.
-* This collection represents the books currently in the bookshelves in your app.
+The contents of this repository are covered under the [MIT License](https://choosealicense.com/licenses/mit/).
 
-### `update`
-
-Method Signature:
-
-```js
-update(book, shelf)
-```
-
-* book: `<Object>` containing at minimum an `id` attribute
-* shelf: `<String>` contains one of ["wantToRead", "currentlyReading", "read"]  
-* Returns a Promise which resolves to a JSON object containing the response data of the POST request
-
-### `search`
-
-Method Signature:
-
-```js
-search(query)
-```
-
-* query: `<String>`
-* Returns a Promise which resolves to a JSON object containing a collection of a maximum of 20 book objects.
-* These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
-
-## Important
-The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results.
-
-## Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). You can find more information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+According to [choosealicense](https://choosealicense.com/), "the MIT License is a permissive license that is short and to the point. It lets people do anything they want with your code as long as they provide attribution back to you and don’t hold you liable."
