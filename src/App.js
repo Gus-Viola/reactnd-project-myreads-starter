@@ -41,7 +41,25 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (<SearchBooks updateState={this.updateState} /> ) : ( <ListBooks books={this.state.books} updateState={this.updateState} />)}
+        {this.state.showSearchPage ?
+          (<SearchBooks
+              onNavigate={() =>{
+                this.setState({showSearchPage: false})
+              }}
+              updateState={this.updateState}
+
+          /> )
+           :
+          (<div>
+              <ListBooks
+                books={this.state.books}
+                updateState={this.updateState}
+              />
+              <div className="open-search">
+                <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              </div>
+            </div>
+          )}
       </div>
     )
   }

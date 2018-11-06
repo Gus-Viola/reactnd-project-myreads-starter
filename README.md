@@ -13,6 +13,9 @@ To get started developing right away:
 
 dependencies:
 npm install --save escape-string-regexp sort-by
+npm install --save react-router-dom
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 ## What You're Getting
 ```bash
