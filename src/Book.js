@@ -10,7 +10,20 @@ export default class Book extends Component {
 
     const availableCover = (book.imageLinks && book.imageLinks.thumbnail) ?  book.imageLinks.thumbnail : noCoverImage;
     const availableTitle = (book.title) ? book.title : "No Title"
-    const availableAuthor = (book.authors) ? book.authors : "No Author"
+    let availableAuthor = (book.authors) ? book.authors : "No Author"
+
+    if (book.authors.length > 1) {
+      availableAuthor =""
+      for (let author in book.authors) {
+        if (author == book.authors.length-1 ) {
+          availableAuthor += book.authors[author]
+        } else {
+          if (author == book.authors.length-2) {
+            availableAuthor += book.authors[author] + " and "
+          } else
+        availableAuthor += book.authors[author] + ", "}
+      }
+    }
 
     return(
       <div className="book" key={book.id}>
