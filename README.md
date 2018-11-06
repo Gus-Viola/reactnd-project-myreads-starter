@@ -21,7 +21,7 @@ from the template.
 
 If you have [node.js](https://nodejs.org/) installed in your machine:
 
-* Click on the `<span style="color:green">green "Clone or download" button</span>` above to the right, get all files and folders in your drive.
+* Click on the <span style="color:green">green "Clone or download" button</span> above to the right, get all files and folders in your drive.
 * Install all project dependencies with `npm install`
 * Start the development server with `npm start`
 
@@ -29,7 +29,7 @@ If you are interested in programming, feel free to [clone](https://help.github.c
 
 ## Instructions
 
-* Click on the `<span style="color:green">+ button</span>` to search new books.
+* Click on the <span style="color:green">+ button</span> to search new books.
 * Use the "shelf changer" to save your favorite books to one of the three shelves
 * The shelves are "Currently Reading, Want to Read, Read"
 
