@@ -1,43 +1,31 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+// import escapeRegExp from 'escape-string-regexp'
+// import sortBy from 'sort-by'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book.js'
-
-
-import escapeRegExp from 'escape-string-regexp'
-import sortBy from 'sort-by'
 
 export default class SearchBooks extends Component {
 
   state = {
     books: [],
-    query: '',
-    errorSearching: false
+    query: ''
   }
 
   updateQuery = (query) => {
-    this.setState({ query })
-
-    let showingBooks
+    this.setState({ query: query })
 
     if (query) {
 
-      const match = new RegExp(escapeRegExp(query), 'i')
-
-      BooksAPI.search(query.trim(), 20).then(books => {
+      BooksAPI.search(query.trim()).then(books => {
         if (books.length > 0) {
-          this.setState({books: books, errorSearching: false})
+          this.setState({books: books})
         } else {
-          this.setState({ books: [], errorSearching: true })
+          this.setState({ books: []})
         }})
 
-      showingBooks = this.state.books.filter((searchBook)=> (match.test (searchBook.title)))
-
-    }  else {this.setState({ books: [], errorSearching: false });}
-
-    showingBooks = this.state.books
-
-    showingBooks.sort(sortBy('title'))
-
+    }  else {this.setState({ books: [] });
+    }
   }
 
 
@@ -47,7 +35,7 @@ export default class SearchBooks extends Component {
     return(
       <div className="search-books">
         <div className="search-books-bar">
-          <a className="close-search" onClick={this.props.onNavigate}>Close</a>
+          <Link className="close-search" to="/">Close</Link>
           <div className="search-books-input-wrapper">
             {/*
               NOTES: The search from BooksAPI is limited to a particular set of search terms.
