@@ -17,20 +17,35 @@ export default class SearchBooks extends Component {
 
     if (query) {
 
-      BooksAPI.search(query.trim()).then(books => {
-        if (books.length > 0) {
-          this.setState({books: books})
-        } else {
-          this.setState({ books: []})
-        }})
+      console.log("query is positive")
 
-    }  else {this.setState({ books: [] });
-    }
-  }
+      BooksAPI.search(query.trim()).then(
+          books => {
+            if(query===this.state.query) {
+              if (books.length > 0) {
+                this.setState({books: books})
+              } else {
+                this.setState({ books: []})
+              }}})
+            }  else {
+              this.setState({ books: [] });
+            }//else
 
-
+      console.log("State updated", this.state.books)
+      this.props.updateState()
+  }//updateQuery
 
   render() {
+
+    const { updateState } = this.props;
+
+    const shelves = [
+      { type: 'currentlyReading', title: 'Currently Reading' },
+      { type: 'wantToRead', title: 'Want to Read' },
+      { type: 'read', title: 'Read'},
+      { type: 'none', title: 'None'}
+                    ];
+
 
     return(
       <div className="search-books">
@@ -51,23 +66,38 @@ export default class SearchBooks extends Component {
               value = {this.state.query}
               onChange={(event)=> this.updateQuery(event.target.value) }
             />
-
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid">
-          {this.state.books.map(book => (
-            <Book
-              book={book}
-              books={this.state.books}
-              key={book.id}
-              updateState={this.props.updateState}
-            />
-          ))}
-          </ol>
+        <ol className="books-grid">
+        {this.state.books.map(book => (
+          <Book
+            book={book}
+            key={book.id}
+            updateState={updateState}
+          />
+        ))}
+        </ol>
+
         </div>
       </div>
 
     )
   }//render
 }//SearchBooks
+
+
+
+// <div>
+//   {shelves.map((shelf, key) => {
+//     booksOnShelf = this.state.books.filter(book => book.shelf == shelf.type);
+//     return (
+//       <div className = "bookshelf" key={key}>
+//         <h2 className = "bookshelf-title"> {shelf.title}</h2>
+//         <div className = "bookshelf-books">
+//           <BookShelf books={booksOnShelf} updateState={updateState} />
+//         </div>
+//       </div>
+//     )
+//   })}
+// </div>

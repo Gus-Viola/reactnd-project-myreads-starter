@@ -12,7 +12,7 @@ export default class ListBooks extends Component {
     const shelves = [
       { type: 'currentlyReading', title: 'Currently Reading' },
       { type: 'wantToRead', title: 'Want to Read' },
-      { type: 'read', title: 'Read' }
+      { type: 'read', title: 'Read'},
                     ];
 
     return (
