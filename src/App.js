@@ -36,7 +36,7 @@ class BooksApp extends React.Component {
       books: array
     });
   });
-}
+}//componentDidMount
 
   render() {
     return (
