@@ -11,47 +11,35 @@ export default class SearchBooks extends Component {
   state = {
     books: [],
     query: '',
-    searchErr: false
+    errorSearching: false
   }
 
   updateQuery = (query) => {
-    this.setState({ query: query.trim()})
+    this.setState({ query })
 
     let showingBooks
 
     if (query) {
 
-      BooksAPI.search(query.trim(), 20).then(books => {
-    books.length > 0
-      ? this.setState({ books: books, searchErr: false })
-      : this.setState({ books: [], searchErr: true });
-  });
+      const match = new RegExp(escapeRegExp(query), 'i')
 
-  // if query is empty => reset state to default
-} else this.setState({ books: [], searchErr: false });
+      BooksAPI.search(query.trim(), 20).then(books => {
+        if (books.length > 0) {
+          this.setState({books: books, errorSearching: false})
+        } else {
+          this.setState({ books: [], errorSearching: true })
+        }})
+
+      showingBooks = this.state.books.filter((searchBook)=> (match.test (searchBook.title)))
+
+    }  else {this.setState({ books: [], errorSearching: false });}
 
     showingBooks = this.state.books
 
+    showingBooks.sort(sortBy('title'))
 
   }
 
-
-//   componentDidUpdate() {
-//   BooksAPI.search(this.state.query, 20).then(array => {
-//     this.setState({
-//       books: array
-//     });
-//   });
-// }//componentDidMount
-//
-//
-//   componentDidMount() {
-//   BooksAPI.search(this.state.query, 20).then(array => {
-//     this.setState({
-//       books: array
-//     });
-//   });
-// }//componentDidMount
 
 
   render() {
@@ -91,13 +79,13 @@ export default class SearchBooks extends Component {
           </div>
         </div>
         <div className="search-books-results">
-        {JSON.stringify(this.state)}
           <ol className="books-grid">
           {this.state.books.map(book => (
             <Book
               book={book}
               books={this.state.books}
               key={book.id}
+              updateState={this.props.updateState}
             />
           ))}
           </ol>
