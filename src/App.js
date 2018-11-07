@@ -35,12 +35,13 @@ export default class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-      
+
         <Route
           path="/search"
           render={() =>(
             <SearchBooks
-                updateState={this.updateState}
+              appStateBooks = {this.state.books}
+              updateState={this.updateState}
             />
           )}/>
         <Route exact path="/" render={() => (

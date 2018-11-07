@@ -6,7 +6,7 @@ export default class Book extends Component {
 
   render () {
 
-    const {book, shelf, updateState} = this.props;
+    const {book, updateState} = this.props;
 
     const availableCover = (book.imageLinks && book.imageLinks.thumbnail) ?  book.imageLinks.thumbnail : noCoverImage;
     const availableTitle = (book.title) ? book.title : "No Title"
