@@ -9,7 +9,8 @@ export default class SearchBooks extends Component {
 
   state = {
     books: [],
-    query: ''
+    query: '',
+    errorSearching: false
   }
 
   updateQuery = (query) => {
@@ -23,31 +24,20 @@ export default class SearchBooks extends Component {
           books => {
             if(query===this.state.query) {
               if (books.length > 0) {
-                this.setState({books: books})
+                this.setState({books: books, errorSearching: false})
                 // console.log("1.5 Setting state as ", books)
               } else {
-                this.setState({ books: []})
+                this.setState({ books: [], errorSearching: true})
               }}})
             }  else {
-              this.setState({ books: [] });
+              this.setState({ books: [], errorSearching: false });
             }//else
 
-      // this.props.updateState()
-      // console.log("2 State updated, now calling shelving ", this.state.books)
       this.shelving(this.state.books)
   }//updateQuery
 
   shelving = (array) => {
-    // console.log("3 Shelving function with array: ", array)
-    // let outputArray, appStateBooks = []
-    // BooksAPI.getAll().then(array => {
-    //       appStateBooks = array })
-    // console.log("4 GetAll de appStateBooks: ", array)
-    // appStateBooks = this.props.appStateBooks
-    // console.log("4 appStateBooks array is ", appStateBooks)
-    // console.log("5: ", array.map(searchBook => appStateBooks.find(asBook => (asBook.id === searchBook.id ))))
     let resultingArray = array.map(searchBook => this.findShelf(searchBook))
-    // console.log("5 Array after findShelf is ", resultingArray )
     this.noneShelf(resultingArray)
   }//shelving
 
@@ -87,14 +77,7 @@ export default class SearchBooks extends Component {
         <div className="search-books-bar">
           <Link className="close-search" to="/">Close</Link>
           <div className="search-books-input-wrapper">
-            {/*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
 
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-              you don't find a specific author or title. Every search is limited by search terms.
-            */}
             <input
               type="text"
               placeholder="Search by title or author"
@@ -103,18 +86,25 @@ export default class SearchBooks extends Component {
             />
           </div>
         </div>
-        <div className="search-books-results">
-        <ol className="books-grid">
-        {this.state.books.map(book => (
-          <Book
-            book={book}
-            key={book.id}
-            updateState={updateState}
-          />
-        ))}
-        </ol>
-
-        </div>
+        {this.state.books.length > 0 && (
+          <div className="search-books-results">
+          <ol className="books-grid">
+          {this.state.books.map(book => (
+            <Book
+              book={book}
+              key={book.id}
+              updateState={updateState}
+            />
+          ))}
+          </ol>
+          </div>
+        )}
+        {this.state.errorSearching && (
+          <div>
+          <h2>Empty Space</h2>
+          <h1>No Books were found, please try again</h1>
+          </div>
+        )}
       </div>
 
     )
