@@ -10,18 +10,18 @@ export default class BooksApp extends React.Component {
       books: []
   }
 
-  updateState(){
-    //this is a callback function that triggers the componentDidUpdate below
-    //I sent this function as a prop all the way down, then called it to trigger the component update
-    //this is coding Horror, but I don't know how to get out of it. Do you suggest anything?
-  }
+  updateState = (shelf, book) => {
+    let newBooksOnShelf = []
 
-  componentDidUpdate() {
-    BooksAPI.getAll().then(array => {
-      this.setState({
-        books: array
-      });
-    });
+    BooksAPI.update(book, shelf).then(object => {
+      book.shelf = shelf
+      newBooksOnShelf = this.state.books.filter(bk => book.id !== bk.id)
+      newBooksOnShelf.push(book)
+      this.setState({books: newBooksOnShelf})
+    })
+    //this corrected function keeps the state of books (thus the 'shelf') at
+    //App.js level. It is passed down as a props to ShelfChanger and called there
+    //when the user clicks.
   }
 
   componentDidMount() {
@@ -49,6 +49,7 @@ export default class BooksApp extends React.Component {
               <ListBooks
                 books={this.state.books}
                 updateState={this.updateState}
+                changeShelf={this.changeShelf}
               />
               <div className="open-search">
                 <Link to="/search"

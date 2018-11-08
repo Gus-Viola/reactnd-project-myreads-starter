@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-// import escapeRegExp from 'escape-string-regexp'
-// import sortBy from 'sort-by'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book.js'
 
@@ -18,29 +16,31 @@ export default class SearchBooks extends Component {
 
     if (query) {
 
-      // console.log("1 Query is positive")
-
       BooksAPI.search(query.trim()).then(
           books => {
             if(query===this.state.query) {
               if (books.length > 0) {
                 this.setState({books: books, errorSearching: false})
-                // console.log("1.5 Setting state as ", books)
+                this.shelving(this.state.books)
               } else {
                 this.setState({ books: [], errorSearching: true})
-              }}})
+              }}}).then(this.shelving(this.state.books))
             }  else {
               this.setState({ books: [], errorSearching: false });
             }//else
 
       this.shelving(this.state.books)
+
   }//updateQuery
 
+  //this is the general shelving function, aided by two subfunctions
   shelving = (array) => {
     let resultingArray = array.map(searchBook => this.findShelf(searchBook))
     this.noneShelf(resultingArray)
+    // this.props.updateState()
   }//shelving
 
+  //if the book is in a shelf, it is returned; otherwise, zero
   findShelf = (book) => {
     let appStateBooks = this.props.appStateBooks
     let foundBook = (appStateBooks.find(asBook => asBook.id === book.id ))
@@ -51,6 +51,7 @@ export default class SearchBooks extends Component {
   }
 }//findShelf
 
+  //this function replaces the zeroes for books in the shelf 'none'
   noneShelf = (array) => {
 
     const searchResultBooks = this.state.books
@@ -63,13 +64,11 @@ export default class SearchBooks extends Component {
         returnArray[index] = value
       }
     }
-    // console.log ("Modified array is ", returnArray)
     this.setState({ books: returnArray})
   }//noneShelf
 
 
   render() {
-
     const { updateState } = this.props;
 
     return(
@@ -110,19 +109,3 @@ export default class SearchBooks extends Component {
     )
   }//render
 }//SearchBooks
-
-
-
-// <div>
-//   {shelves.map((shelf, key) => {
-//     booksOnShelf = this.state.books.filter(book => book.shelf == shelf.type);
-//     return (
-//       <div className = "bookshelf" key={key}>
-//         <h2 className = "bookshelf-title"> {shelf.title}</h2>
-//         <div className = "bookshelf-books">
-//           <BookShelf books={booksOnShelf} updateState={updateState} />
-//         </div>
-//       </div>
-//     )
-//   })}
-// </div>

@@ -1,7 +1,4 @@
 import React, {Component} from 'react'
-import * as BooksAPI from './BooksAPI'
-
-
 
 export default class ShelfChanger extends Component {
 
@@ -11,7 +8,9 @@ export default class ShelfChanger extends Component {
 
     return (
       <div className="book-shelf-changer">
-        <select value={book.shelf} onChange={e => BooksAPI.update(book, e.target.value).then(updateState())}>
+        <select
+          value={book.shelf ? book.shelf: 'none'}
+          onChange={e =>  updateState(e.target.value, book)}>
           <option value="move" disabled>Move to...</option>
           <option value ="currentlyReading">Currently Reading</option>
           <option value="wantToRead">Want to Read</option>
