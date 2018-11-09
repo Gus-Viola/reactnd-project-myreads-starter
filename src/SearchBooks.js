@@ -14,6 +14,16 @@ export default class SearchBooks extends Component {
   updateQuery = (query) => {
     this.setState({ query: query })
 
+    //refactoring of the shelving and auxliary functions
+    const books  = this.state.books.map(book => {
+        const found = this.props.appStateBooks.find(appBook => appBook.id === book.id);
+        if(found) {
+            return found;
+        } else {
+            return book
+        }
+    })
+
     if (query) {
 
       BooksAPI.search(query.trim()).then(
@@ -21,52 +31,55 @@ export default class SearchBooks extends Component {
             if(query===this.state.query) {
               if (books.length > 0) {
                 this.setState({books: books, errorSearching: false})
-                this.shelving(this.state.books)
+                // this.shelving(this.state.books)
+                this.setState({ books });
               } else {
                 this.setState({ books: [], errorSearching: true})
-              }}}).then(this.shelving(this.state.books))
+              }}}).then(this.setState({ books }));
             }  else {
               this.setState({ books: [], errorSearching: false });
             }//else
 
-      this.shelving(this.state.books)
+      // this.shelving(this.state.books)
+      this.setState({ books });
 
   }//updateQuery
 
+
   //this is the general shelving function, aided by two subfunctions
-  shelving = (array) => {
-    let resultingArray = array.map(searchBook => this.findShelf(searchBook))
-    this.noneShelf(resultingArray)
-    // this.props.updateState()
-  }//shelving
-
-  //if the book is in a shelf, it is returned; otherwise, zero
-  findShelf = (book) => {
-    let appStateBooks = this.props.appStateBooks
-    let foundBook = (appStateBooks.find(asBook => asBook.id === book.id ))
-    if (!foundBook) {
-      return 0
-    } else {
-    return foundBook
-  }
-}//findShelf
-
-  //this function replaces the zeroes for books in the shelf 'none'
-  noneShelf = (array) => {
-
-    const searchResultBooks = this.state.books
-    let returnArray = array
-    for (const [index, value] of array.entries()) {
-      if (value === 0) {
-        searchResultBooks[index].shelf = "none"
-        returnArray[index] = searchResultBooks[index]
-      } else {
-        returnArray[index] = value
-      }
-    }
-    this.setState({ books: returnArray})
-  }//noneShelf
-
+  //It was refactored by use of the constant books inside the updateQuery
+//   shelving = (array) => {
+//     let resultingArray = array.map(searchBook => this.findShelf(searchBook))
+//     this.noneShelf(resultingArray)
+//     // this.props.updateState()
+//   }//shelving
+//
+//   //if the book is in a shelf, it is returned; otherwise, zero
+//   findShelf = (book) => {
+//     let appStateBooks = this.props.appStateBooks
+//     let foundBook = (appStateBooks.find(asBook => asBook.id === book.id ))
+//     if (!foundBook) {
+//       return 0
+//     } else {
+//     return foundBook
+//   }
+// }//findShelf
+//
+//   //this function replaces the zeroes for books in the shelf 'none'
+//   noneShelf = (array) => {
+//
+//     const searchResultBooks = this.state.books
+//     let returnArray = array
+//     for (const [index, value] of array.entries()) {
+//       if (value === 0) {
+//         searchResultBooks[index].shelf = "none"
+//         returnArray[index] = searchResultBooks[index]
+//       } else {
+//         returnArray[index] = value
+//       }
+//     }
+//     this.setState({ books: returnArray})
+//   }//noneShelf
 
   render() {
     const { updateState } = this.props;
