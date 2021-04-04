@@ -20,3 +20,10 @@ body {
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
 }
+
+@media (max-width: 500px) {
+  .projects .buttonText {
+    font-size: 0;
+    color: red;
+  }
+}

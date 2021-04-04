@@ -17,10 +17,10 @@ export default class Book extends Component {
         if (book.authors.length > 1) {
           availableAuthor =""
           for (let author in book.authors) {
-            if (author == book.authors.length-1 ) {
+            if (author === book.authors.length-1 ) {
               availableAuthor += book.authors[author]
             } else {
-              if (author == book.authors.length-2) {
+              if (author === book.authors.length-2) {
                 availableAuthor += book.authors[author] + " and "
               } else
             availableAuthor += book.authors[author] + ", "}
